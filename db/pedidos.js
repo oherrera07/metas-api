@@ -1,7 +1,7 @@
 const db = require('./configuracion');
 
-function pedirTodas(tabla, callback){
-    db.any(`SELECT * FROM ${tabla}`)
+function pedirTodas(tabla, cuenta_id, callback){
+    db.any(`SELECT * FROM ${tabla} WHERE cuenta_id = ${cuenta_id}`)
         .then(resultado =>{
             callback(null, resultado);
         })
@@ -12,6 +12,16 @@ function pedirTodas(tabla, callback){
 
 function pedir(tabla, id, callback){
     db.any(`SELECT * FROM ${tabla} WHERE id = ${id}`)
+        .then(resultado => {
+            callback(null, resultado);
+        })
+        .catch(error => {
+            callback(error);
+        });
+}
+
+function pedirCuenta(usuario, callback){
+    db.any(`SELECT * FROM cuentas WHERE usuario = '${usuario}'`)
         .then(resultado => {
             callback(null, resultado);
         })
@@ -62,5 +72,6 @@ module.exports ={
     pedir,
     crear,
     actualizar,
-    borrar
+    borrar, 
+    pedirCuenta
 };

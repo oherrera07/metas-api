@@ -38,7 +38,7 @@ let metas = [
 
 /* GET lista de metas */
 router.get('/', function(req, res, next) {
-  pedirTodas('metas', (err, metas)=>{
+  pedirTodas('metas', req.auth.id, (err, metas)=>{
     if(err){
       return next(err);
     }
